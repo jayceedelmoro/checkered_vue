@@ -1,11 +1,22 @@
 <script setup>
-    import { ref } from 'vue';
+  import { ref } from 'vue';
+  import axios from 'axios';
+
   import LoginComponent from '../components/LoginComponent.vue';
 
-  let loginPageDisplay = ref('ty');
+  const loginPageDisplay = ref('login');
+
+  const username = ref('');
+  const password = ref('');
 
   const toggleDisplay = (event) => {
     loginPageDisplay.value = event.target.value;
+  }
+
+  const loginHandler = () => {
+    axios.post(`http://localhost:8000/api/v1/users/login`, {'username': username.value, 'password': password.value } ).then(dbResponse => {
+        
+    })
   }
 </script>
 
@@ -18,15 +29,17 @@
                 <form>
                     <input
                         type="text"
+                        v-model="username"
                         placeholder="username"
                     >
                     <input
                         type="password"
+                        v-model="password"
                         placeholder="password"
                     >
                     <button
                         type="submit"
-                        @click=""
+                        @click.prevent="loginHandler"
                     >
                         Log In
                     </button>

@@ -1,7 +1,3 @@
-<script setup>
-    import TextOutline from './TextOutline.vue';
-</script>
-
 <template>
     <TextOutline />
     <div class="container">
