@@ -1,6 +1,9 @@
 <script setup>
   import { ref } from 'vue';
   import axios from 'axios';
+  
+  import { toast } from 'vue3-toastify';
+  import 'vue3-toastify/dist/index.css';
 
   import LoginComponent from '../components/LoginComponent.vue';
 
@@ -15,7 +18,14 @@
 
   const loginHandler = () => {
     axios.post(`http://localhost:8000/api/v1/users/login`, {'username': username.value, 'password': password.value } ).then(dbResponse => {
-        
+        toast.success(dbResponse.data.message, {
+            autoClose: 1000,
+        });
+    })
+    .catch(error => {
+        toast.error(error.response.data.error, {
+            autoClose: 1000,
+        });
     })
   }
 </script>
