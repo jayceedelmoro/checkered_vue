@@ -1,0 +1,29 @@
+:root {
+    --main-color: #fcb200;
+    --white: #FFF;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+#app,
+main {
+    min-height: 100vh;;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+    font-family: 'BAUHAUS 93';
+}
+
+p {
+    font-family: Helvetica;
+}

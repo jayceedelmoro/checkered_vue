@@ -1,3 +1,9 @@
+<script setup>
+  import LoginPage from './pages/LoginPage.vue'
+</script>
+
 <template>
-  <p>sdfsa</p>
+  <main>
+    <LoginPage />
+  </main>
 </template>
