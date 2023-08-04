@@ -18,7 +18,7 @@
   }
 
   const loginHandler = () => {
-    axios.post(`http://localhost:8000/api/v1/users/login`, {'username': username.value, 'password': password.value } ).then(dbResponse => {
+    axios.post(`${ import.meta.env.VITE_SITE_LINK }/api/v1/users/login`, {'username': username.value, 'password': password.value } ).then(dbResponse => {
         toast.success(dbResponse.data.message, {
             autoClose: 1000,
         });
@@ -31,7 +31,7 @@
   }
 
   const registerHandler = () => {
-  axios.post(`http://localhost:8000/api/v1/users/register`, {'username': username.value, 'email': email.value, 'password': password.value } ).then(dbResponse => {
+  axios.post(`${ import.meta.env.VITE_SITE_LINK }/api/v1/users/register`, {'username': username.value, 'email': email.value, 'password': password.value } ).then(dbResponse => {
         toast.success(dbResponse.data.message, {
             autoClose: 1000,
         });
