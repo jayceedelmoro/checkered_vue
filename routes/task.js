@@ -42,13 +42,15 @@ router.get('/:taskId', (request, response) => {
 router.post('/', (request, response) => {
     const {
         name,
-        description
+        description,
+        owner
     } = request.body;
 
     if (name && description) {
         tasksRef.add({
             name,
-            description
+            description,
+            owner
         })
         .then(dbResponse => {
             response.status( 201 ).send({ message: 'Successfully Created' })
