@@ -1,5 +1,4 @@
 <template>
-    <TextOutline />
     <div class="container">
         <div class='left column'>
             <h2>
