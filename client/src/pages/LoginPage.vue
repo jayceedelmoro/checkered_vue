@@ -133,7 +133,7 @@
 
             <template  v-else-if="loginPageDisplay == 'ty'" #content>
                 <img
-                    src="../assets/images/SIGN%20UP%20CHECK.png"
+                    :src="require(`../assets/images/ ${encodeURIComponent('SIGN UP CHECK.png')}`)"
                     alt="email"
                 >
                 <p class="confirmation_text">
