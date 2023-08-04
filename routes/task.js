@@ -106,7 +106,11 @@ router.put('/:taskId', (request, response) => {
 // api/v1/tasks/:taskId
 router.delete('/:taskId', (request, response) => {
     tasksRef.doc(request.params.taskId).delete().then(dbResponse => {
-        response.status( 201 ).send({ message: 'Successfully Deleted' })
+        usersRef.doc(request.body.ownerId).update({
+            tasks: admin.firestore.FieldValue.arrayRemove(request.params.taskId)
+        }).then(() =>{
+            response.status( 201 ).send({ message: 'Successfully Deleted' })
+        });
     });
 });
     
