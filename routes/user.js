@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const db = admin.firestore();
 
 let usersRef = db.collection('users');
+let tasksRef = db.collection('tasks');
 
 // GET REQUESTS
 
@@ -19,7 +20,7 @@ router.get('/', (request, response) => {
             userList.push({ id: doc.id, data: doc.data() });
         });
         response.send({ userList });
-    })
+    });
 
 });
 
@@ -33,7 +34,30 @@ router.get('/:userId', (request, response) => {
         else {
             response.status( 404 ).send({ message: 'User does not exist' });
         }
-    })
+    });
+});
+
+// show all tasks of a user
+// api/v1/users/:userId/tasks
+router.get('/:userId/tasks', (request, response) => {
+    usersRef.doc(request.params.userId).get().then(doc => {
+        if (doc.exists) {
+            const list = doc.data().tasks;
+
+            let tasksList = [];
+
+                tasksRef.where(admin.firestore.FieldPath.documentId(),'in', list).get().then(querySnapShot => {
+                    querySnapShot.forEach(doc => {
+                        tasksList.push({ id: doc.id, data: doc.data() });
+                    });
+                response.send({ tasksList });
+                });
+
+        }
+        else {
+            response.status( 404 ).send({ message: 'User does not exist' });
+        }
+    });
 });
 
 // POST REQUESTS
@@ -60,7 +84,8 @@ router.post('/register', (request, response) => {
                         usersRef.add({
                             username,
                             email,
-                            password: hash
+                            password: hash,
+                            tasks: []
                         })
                         .then(dbResponse => {
                             response.status( 201 ).send({ message: 'User Created' });
@@ -131,7 +156,7 @@ router.put('/:userId', (request, response) => {
     })
     .catch(error => {
         response.status( 404 ).send({ message: 'User was not found' });
-    })
+    });
 });
     
 // update a user's password
