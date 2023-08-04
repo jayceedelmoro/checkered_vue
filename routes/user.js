@@ -86,13 +86,13 @@ router.post('/register', (request, response) => {
 router.post('/login', (request, response) => {
     usersRef.where('username', '==', request.body.username).get().then(querySnapShot => {
         if( querySnapShot.empty ) {
-            return response.status( 404 ).send({ error: 'Please enter correct username or password!' });
+            return response.status( 404 ).send({ message: 'Please enter correct username or password!' });
         }
 
         querySnapShot.forEach(doc => {
             bcrypt.compare( request.body.password, doc.data().password ).then( isValid => {
                 if( !isValid ){
-                    response.status( 400 ).send({ error: 'Please enter correct username or password!' });
+                    response.status( 400 ).send({ message: 'Please enter correct username or password!' });
                 }
                 
                 else {
