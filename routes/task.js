@@ -3,6 +3,7 @@ const admin = require("firebase-admin");
 
 const db = admin.firestore();
 
+let usersRef = db.collection('users');
 let tasksRef = db.collection('tasks');
 
 // GET REQUESTS
@@ -43,17 +44,22 @@ router.post('/', (request, response) => {
     const {
         name,
         description,
-        owner
+        ownerId
     } = request.body;
 
     if (name && description) {
         tasksRef.add({
             name,
             description,
-            owner
+            ownerId,
+            status: false
         })
         .then(dbResponse => {
-            response.status( 201 ).send({ message: 'Successfully Created' })
+            usersRef.doc(ownerId).update({
+                tasks: admin.firestore.FieldValue.arrayUnion(dbResponse.id)
+            }).then(() =>{
+                response.status( 201 ).send({ message: 'Successfully Created' });
+            });
         });
     }
 
@@ -69,7 +75,8 @@ router.post('/', (request, response) => {
 router.put('/:taskId', (request, response) => {
     const {
         name,
-        description
+        description,
+        status
     } = request.body;
 
     let query = {};
@@ -82,6 +89,7 @@ router.put('/:taskId', (request, response) => {
 
     addField('name', name);
     addField('description', description);
+    addField('status', status);
 
     tasksRef.doc(request.params.taskId).update({query})
     .then(doc => {
