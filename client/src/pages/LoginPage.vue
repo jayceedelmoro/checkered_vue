@@ -11,9 +11,10 @@
 
   const username = ref('');
   const password = ref('');
+  const email = ref('');
 
-  const toggleDisplay = (event) => {
-    loginPageDisplay.value = event.target.value;
+  const toggleDisplay = (text) => {
+    loginPageDisplay.value = text;
   }
 
   const loginHandler = () => {
@@ -23,11 +24,25 @@
         });
     })
     .catch(error => {
-        toast.error(error.response.data.error, {
+        toast.error(error.response.data.message, {
             autoClose: 1000,
         });
     })
   }
+
+  const registerHandler = () => {
+  axios.post(`http://localhost:8000/api/v1/users/register`, {'username': username.value, 'email': email.value, 'password': password.value } ).then(dbResponse => {
+        toast.success(dbResponse.data.message, {
+            autoClose: 1000,
+        });
+        toggleDisplay('ty');
+  })
+  .catch(error => {
+        toast.error(error.response.data.message, {
+            autoClose: 1000,
+        });
+  })
+}
 </script>
 
 <template>
@@ -61,7 +76,7 @@
                     <button
                         type="button"
                         value="register"
-                        @click="toggleDisplay"
+                        @click="toggleDisplay('register')"
                     >
                         Register
                     </button>
@@ -77,19 +92,22 @@
                 <form>
                     <input
                         type="text"
+                        v-model="username"
                         placeholder="username"
                     >
                     <input
                         type="email"
+                        v-model="email"
                         placeholder="email"
                     >
                     <input
                         type="password"
+                        v-model="password"
                         placeholder="password"
                     >
                     <button
                         type="submit"
-                        @click=""
+                        @click.prevent="registerHandler"
                     >
                         Sign Up
                     </button>
@@ -101,7 +119,7 @@
                     <button
                         type="button"
                         value="login"
-                        @click="toggleDisplay"
+                        @click="toggleDisplay('login')"
                     >
                         LOG IN
                     </button>
@@ -118,8 +136,15 @@
                     src="../assets/images/SIGN%20UP%20CHECK.png"
                     alt="email"
                 >
-                <p>
+                <p class="confirmation_text">
                     You've signed up! <br />Please check your email to verify account.
+                </p>
+                <br />
+                <p
+                    class="loginLink"
+                    @click="toggleDisplay('login')"
+                >
+                    LOGIN
                 </p>
             </template>
 
@@ -154,6 +179,22 @@
         text-align: center;
     }
 
+    .confirmation_text,
+    .loginLink {
+        font-size: 18px;
+        text-align: center;
+    }
+
+    .loginLink {
+        color: var(--white);
+        font-size: 20px;
+        text-decoration: underline;
+    }
+
+    .loginLink:hover {
+        cursor: pointer;
+    }
+
     input {
         width: 100%;
         font-size: 20px;
@@ -167,6 +208,12 @@
         font-weight: 600;
         text-transform: uppercase;
         background: var(--white);
+        cursor: pointer;
+    }
+
+    button[type=button] {
+        min-width: 160px;
+        font-size: 16px;
     }
 
     input:focus {
