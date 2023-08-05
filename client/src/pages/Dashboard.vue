@@ -9,7 +9,7 @@ import ModalComponent from '../components/ModalComponent.vue';
 
 const data = useUserDataStore();
 
-const isModalOpen = ref(true);
+const isModalOpen = ref(false);
 
 //fetch user data and save it UserData store (variable)
 axios.get(`${ import.meta.env.VITE_SITE_LINK }/api/v1/users/${ localStorage.getItem('userId') }`).then((dbResponse) => {

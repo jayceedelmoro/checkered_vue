@@ -1,5 +1,6 @@
 <script setup>
     import { CloseCircleOutline } from '@vicons/ionicons5';
+    import { Icon } from '@vicons/utils'
 
     const props = defineProps(['isModalOpen']);
     props.isModalOpen = false;
@@ -10,7 +11,9 @@
     <div class="modal-overlay">
         <div class="modal-container">
             <div className='modal-close' @Click={closeModal}>
-                <CloseCircleOutline />
+                <Icon>
+                    <CloseCircleOutline />
+                </Icon>
             </div>
         </div>
     </div>
