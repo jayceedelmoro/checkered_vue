@@ -4,7 +4,7 @@
     import { toast } from 'vue3-toastify';
     import 'vue3-toastify/dist/index.css';
 
-    import { useUserDataStore } from '../stores/UserData';
+    import { useUserDataStore } from '../stores/UserData.js';
 
 
     const data = useUserDataStore();

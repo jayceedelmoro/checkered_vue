@@ -1,6 +1,6 @@
 <script setup>
 
-    import { useUserDataStore } from '@/stores/userData';
+    import { useUserDataStore } from '../stores/UserData.js';
     const data = useUserDataStore();
 
 </script>
