@@ -76,22 +76,22 @@ router.put('/:taskId', (request, response) => {
     const {
         name,
         description,
-        status
+        isComplete
     } = request.body;
 
     let query = {};
 
     const addField = (fieldName, fieldValue) => {
-        if (fieldValue) {
+        if (fieldValue !== undefined) {
             query[fieldName] = fieldValue;
         }
     }
 
     addField('name', name);
     addField('description', description);
-    addField('status', status);
+    addField('isComplete', isComplete);
 
-    tasksRef.doc(request.params.taskId).update({query})
+    tasksRef.doc(request.params.taskId).update(query)
     .then(doc => {
         response.send({ message: 'Successfully Updated' });
     })
