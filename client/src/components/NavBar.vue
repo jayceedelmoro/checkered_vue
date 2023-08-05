@@ -27,7 +27,7 @@
     }
 
     .navbar-container > * {
-        width: 100%;;
+        width: 100%;
     }
 
     .username {
