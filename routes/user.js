@@ -121,7 +121,7 @@ router.post('/login', (request, response) => {
                 }
                 
                 else {
-                    response.status( 200 ).send({ message: 'Login Successful', userDetails: doc.data() });
+                    response.status( 200 ).send({ message: 'Login Successful', userDetails: {id: doc.id, details: doc.data()} });
                 };
             });
         });
