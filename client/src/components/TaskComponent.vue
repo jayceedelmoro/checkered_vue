@@ -1,5 +1,5 @@
 <script setup>
-    import { useUserDataStore } from '@/stores/userData';
+    import { useUserDataStore } from '@/stores/userData.js';
     import { ref } from 'vue';
 
     import axios from 'axios';
@@ -13,6 +13,15 @@
         data.tasks = dbResponse.data.tasksList;
         taskList.value = data.tasks;
     });
+
+    const completeHandler = (taskId) => {
+        axios.put(`${ import.meta.env.VITE_SITE_LINK }/api/v1/tasks/${ taskId }`, {'isComplete': event.target.checked }).then(() => {
+            axios.get(`${ import.meta.env.VITE_SITE_LINK }/api/v1/users/${ localStorage.getItem('userId') }/tasks`).then((dbResponse) => {
+                data.tasks = dbResponse.data.tasksList;
+                taskList.value = data.tasks;
+            });
+        });
+    }
 
 </script>
 
@@ -28,6 +37,8 @@
             <div v-for="task in taskList" class="tasks">
                 <input
                     type="checkbox"
+                    v-model="task.data.isComplete"
+                    @change="completeHandler(task.id, $event)"
                 >
                 <p> {{ task.data.name }} </p>
                 <p> {{ task.data.description }} </p>
