@@ -1,11 +1,14 @@
 <script setup>
   import { ref } from 'vue';
   import axios from 'axios';
+  import { useRouter } from 'vue-router';
   
   import { toast } from 'vue3-toastify';
   import 'vue3-toastify/dist/index.css';
 
   import LoginComponent from '../components/LoginComponent.vue';
+
+  const router = useRouter();
 
   const loginPageDisplay = ref('login');
 
@@ -13,15 +16,27 @@
   const password = ref('');
   const email = ref('');
 
+  const navigate = (url) => {
+    router.push(url);
+  }
+
   const toggleDisplay = (text) => {
     loginPageDisplay.value = text;
   }
 
   const loginHandler = () => {
     axios.post(`${ import.meta.env.VITE_SITE_LINK }/api/v1/users/login`, {'username': username.value, 'password': password.value } ).then(dbResponse => {
+        
+        localStorage.setItem('userId', dbResponse.data.userDetails.id);
+
         toast.success(dbResponse.data.message, {
             autoClose: 1000,
         });
+        
+        setInterval(() => {
+            navigate('/dashboard');
+        }, 2000);
+
     })
     .catch(error => {
         toast.error(error.response.data.message, {
