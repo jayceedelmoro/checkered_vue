@@ -1,5 +1,5 @@
 <script setup>
-import { useUserDataStore } from '../stores/UserData';
+import { useUserDataStore } from '../stores/UserData.js';
 import { ref } from 'vue';
 import axios from 'axios';
 
