@@ -16,6 +16,8 @@
     "vue3-toastify": "^0.1.11"
   },
   "devDependencies": {
+    "@vicons/ionicons5": "^0.12.0",
+    "@vicons/utils": "^0.1.4",
     "@vitejs/plugin-vue": "^4.2.3",
     "vite": "^4.4.6"
   }

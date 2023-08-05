@@ -1,8 +1,11 @@
 <script setup>
-    import { useUserDataStore } from '@/stores/userData.js';
     import { ref } from 'vue';
-
     import axios from 'axios';
+    import { toast } from 'vue3-toastify';
+    import 'vue3-toastify/dist/index.css';
+
+    import { useUserDataStore } from '../stores/UserData';
+
 
     const data = useUserDataStore();
 
@@ -19,6 +22,10 @@
             axios.get(`${ import.meta.env.VITE_SITE_LINK }/api/v1/users/${ localStorage.getItem('userId') }/tasks`).then((dbResponse) => {
                 data.tasks = dbResponse.data.tasksList;
                 taskList.value = data.tasks;
+
+                toast.success('Task Updated', {
+                    autoClose: 1000,
+                });
             });
         });
     }
