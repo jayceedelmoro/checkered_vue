@@ -5,7 +5,6 @@ import axios from 'axios';
 
 import NavBar from '../components/NavBar.vue'
 import TaskComponent from '../components/TaskComponent.vue';
-import ModalComponent from '../components/ModalComponent.vue';
 
 const data = useUserDataStore();
 
@@ -37,11 +36,6 @@ axios.get(`${ import.meta.env.VITE_SITE_LINK }/api/v1/users/${ localStorage.getI
             <template #title> Completed </template>
         </TaskComponent>
     </div>
-
-    <ModalComponent
-        v-if="isModalOpen"
-        :isModalOpen="isModalOpen"
-    />
 </template>
 
 <style scoped>
