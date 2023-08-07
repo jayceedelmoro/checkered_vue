@@ -28,3 +28,8 @@ p {
     font-family: Helvetica;
     margin: 0;
 }
+
+button:hover {
+    cursor: pointer;
+    box-shadow: 0 0 10px #D3D3D3;
+}
